@@ -29,7 +29,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const CreatorPage = () => {
-  const { username } = useParams();
+  const params = useParams();
+  const username = (params as any)?.username as string;
   const [supportAmount, setSupportAmount] = useState("");
   const [supporterName, setSupporterName] = useState("");
   const [supportMessage, setSupportMessage] = useState("");
@@ -141,58 +142,133 @@ const CreatorPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      {/* Navigation Bar */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <Button variant="default" size="sm" className="bg-secondary text-secondary-foreground">
+              Home
+            </Button>
+            <Button variant="outline" size="sm" className="text-foreground/80 hover:text-primary">
+              Posts ({creatorData.posts.length})
+            </Button>
+            <Link href="#" className="text-foreground/80 hover:text-primary transition-colors">
+              Membership
+            </Link>
+            <Link href="#" className="text-foreground/80 hover:text-primary transition-colors">
+              Shop
+            </Link>
+            <Button variant="ghost" size="sm" className="text-foreground/80 hover:text-primary">
+              <Share2 className="w-4 h-4 mr-2" />
+              Share
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Button variant="outline" size="sm">
+              <Edit3 className="w-4 h-4 mr-2" />
+              Edit Page
+            </Button>
+            <Button size="sm" className="bg-gradient-coffee">
+              <Plus className="w-4 h-4 mr-2" />
+              Create
+            </Button>
+            
+            {/* Account Menu */}
+            <div className="relative">
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => setIsAccountMenuOpen(!isAccountMenuOpen)}
+                className="flex items-center gap-2"
+              >
+                <div className="w-8 h-8 bg-gradient-coffee rounded-full flex items-center justify-center">
+                  <User className="w-4 h-4 text-primary-foreground" />
+                </div>
+                <ChevronDown className="w-4 h-4" />
+              </Button>
+              
+              {isAccountMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-48 bg-card border border-border rounded-lg shadow-lg py-2 z-50">
+                  <Link href={`/${username}`} className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    View my page
+                  </Link>
+                  <Link href="/creator-dashboard" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    Dashboard
+                  </Link>
+                  <Link href="#" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    My account
+                  </Link>
+                  <Link href="#" className="block px-4 py-2 text-sm hover:bg-muted transition-colors">
+                    Refer a creator
+                  </Link>
+                  <hr className="my-2 border-border" />
+                  <button className="block w-full text-left px-4 py-2 text-sm hover:bg-muted transition-colors text-red-500">
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Header Section */}
+      <section className="pt-16 bg-gradient-to-br from-green-600 to-green-800 relative overflow-hidden">
+        <div className="container mx-auto px-4 py-20">
+          <div className="relative z-10">
+            <div className="text-center mb-12">
+              <h1 className="text-6xl md:text-8xl font-bold text-white mb-6">
+                {creatorData.name.toUpperCase()} {creatorData.title.toUpperCase()}
+              </h1>
+              <Button size="lg" className="bg-red-500 hover:bg-red-600 text-white text-lg px-8 py-4 rounded-none">
+                SUBSCRIBE
+              </Button>
+            </div>
+            
+            <div className="absolute top-8 right-8">
+              <div className="w-32 h-32 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center">
+                <img
+                  src={creatorData.avatar}
+                  alt={creatorData.name}
+                  className="w-28 h-28 rounded-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+          
+          {/* Decorative Pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-10 left-10 w-4 h-4 bg-white rounded-full"></div>
+            <div className="absolute top-20 left-32 w-2 h-2 bg-white rounded-full"></div>
+            <div className="absolute top-32 left-16 w-3 h-3 bg-white rounded-full"></div>
+            <div className="absolute bottom-10 right-10 w-4 h-4 bg-white rounded-full"></div>
+            <div className="absolute bottom-20 right-32 w-2 h-2 bg-white rounded-full"></div>
+            <div className="absolute bottom-32 right-16 w-3 h-3 bg-white rounded-full"></div>
+          </div>
+        </div>
+      </section>
       
-      <main className="container mx-auto px-4 py-8 mt-16">
+      <main className="container mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Left Column - Main Content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Creator Profile */}
+            {/* About Section */}
             <Card>
-              <CardContent className="p-8">
-                <div className="flex items-start gap-6">
-                  <Avatar className="w-24 h-24">
-                    <AvatarImage src={creatorData.avatar} alt={creatorData.name} />
-                    <AvatarFallback>{creatorData.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  
-                  <div className="flex-1">
-                    <h1 className="text-3xl font-bold text-foreground mb-2">{creatorData.name}</h1>
-                    <div className="inline-block bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-sm font-medium mb-4">
-                      {creatorData.title}
-                    </div>
-                    <p className="text-muted-foreground leading-relaxed mb-6">
-                      {creatorData.bio}
-                    </p>
-                    
-                    <div className="flex items-center gap-6 text-sm">
-                      <div className="flex items-center gap-2">
-                        <User className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-muted-foreground">{creatorData.stats.supporters} supporters</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Coffee className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-muted-foreground">{creatorData.stats.coffees} cà phê</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-muted-foreground">{creatorData.stats.joinDate}</span>
-                      </div>
-                    </div>
-                  </div>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-2xl font-bold text-foreground">About {creatorData.name}</h2>
+                  <Button variant="ghost" size="sm">
+                    <Edit3 className="w-4 h-4 mr-2" />
+                    Edit
+                  </Button>
                 </div>
+                <p className="text-muted-foreground leading-relaxed">
+                  {creatorData.bio}
+                </p>
               </CardContent>
             </Card>
 
-            {/* Navigation Tabs */}
-            <div className="flex gap-4 border-b border-border">
-              <Button variant="default" className="rounded-b-none">
-                Home
-              </Button>
-              <Button variant="outline" className="rounded-b-none">
-                Posts ({creatorData.posts.length})
-              </Button>
-            </div>
 
             {/* Recent Posts */}
             <div className="space-y-6">
@@ -271,7 +347,7 @@ const CreatorPage = () => {
               <Card>
                 <CardContent className="p-6">
                   <h2 className="text-xl font-semibold text-foreground mb-6">
-                    Mua cà phê cho {creatorData.name}
+                    Support {creatorData.name}
                   </h2>
                   
                   <div className="space-y-4">
