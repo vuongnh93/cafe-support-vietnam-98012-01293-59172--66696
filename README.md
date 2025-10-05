@@ -33,6 +33,41 @@ npm install
 npm run dev
 ```
 
+## 🔄 Remix This Project
+
+Bạn có thể tự do remix (fork/copy) dự án này cho mục đích cá nhân hoặc thương mại.
+
+### Cách remix:
+
+1. **Fork trên GitHub:**
+   - Click nút "Fork" ở góc trên bên phải
+   - Clone repository đã fork về máy
+
+2. **Remix từ đầu:**
+   ```bash
+   # Clone repository
+   git clone https://github.com/vuongnh93/cafe-support-vietnam-98012-01293-59172--66696.git my-coffee-support
+   cd my-coffee-support
+   
+   # Xóa git history cũ
+   rm -rf .git
+   git init
+   
+   # Cài đặt dependencies
+   npm install
+   
+   # Tùy chỉnh project
+   # - Đổi tên trong package.json
+   # - Cập nhật README.md
+   # - Thay đổi branding/colors
+   ```
+
+3. **Deploy:**
+   ```bash
+   npm run build
+   # Deploy dist/ folder lên hosting provider
+   ```
+
 ## 📁 Project Structure
 
 ```
