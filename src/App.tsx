@@ -19,6 +19,7 @@ import Posts from "./pages/Posts";
 import PostEditor from "./pages/PostEditor";
 import SupportPage from "./pages/SupportPage";
 import CreatorPage from "./pages/CreatorPage";
+import CreatorPosts from "./pages/CreatorPosts";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,12 +43,13 @@ const App = () => (
         <Route path="/supporter-management" component={SupporterManagement} />
         <Route path="/post/:postSlug" component={PostDetail} />
         <Route path="/posts" component={Posts} />
+        <Route path="/posts/:username" component={CreatorPosts} />
         <Route path="/post-editor" component={PostEditor} />
         <Route path="/post-editor/:id" component={PostEditor} />
         <Route path="/support" component={SupportPage} />
         <Route path="/:username" component={CreatorPage} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-        <Route component={NotFound} />
+        <Route path="*" component={NotFound} />
       </Router>
     </TooltipProvider>
   </QueryClientProvider>
