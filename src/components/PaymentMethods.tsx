@@ -74,26 +74,36 @@ const PaymentMethods = () => {
           </p>
         </div>
 
-        <div className="relative max-w-4xl mx-auto">
-          {/* Navigation buttons */}
-          <Button
-            variant="outline"
-            size="icon"
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-10 bg-background/80 backdrop-blur-sm hover:bg-background"
-            onClick={prevSlide}
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          
-          <Button
-            variant="outline"
-            size="icon"
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-10 bg-background/80 backdrop-blur-sm hover:bg-background"
-            onClick={nextSlide}
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
+        {/* Desktop Grid Layout */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          {paymentMethods.map((method, index) => (
+            <Card
+              key={index}
+              className="p-6 hover:shadow-warm transition-all duration-300 hover:-translate-y-1 bg-card border-border relative overflow-hidden group animate-fade-in-up"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              {method.popular && (
+                <div className="absolute top-2 right-2 px-2 py-1 bg-gradient-coffee text-primary-foreground text-xs font-semibold rounded-full">
+                  Phổ biến
+                </div>
+              )}
+              <div className="text-center">
+                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
+                  {method.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-foreground mb-2">
+                  {method.name}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {method.description}
+                </p>
+              </div>
+            </Card>
+          ))}
+        </div>
 
+        {/* Mobile Carousel Layout */}
+        <div className="md:hidden relative max-w-sm mx-auto">
           {/* Carousel container */}
           <div 
             className="overflow-hidden rounded-lg"
@@ -139,7 +149,7 @@ const PaymentMethods = () => {
             </div>
           </div>
 
-          {/* Dots indicator */}
+          {/* Dots indicator - only on mobile */}
           <div className="flex justify-center mt-6 space-x-2">
             {paymentMethods.map((_, index) => (
               <button

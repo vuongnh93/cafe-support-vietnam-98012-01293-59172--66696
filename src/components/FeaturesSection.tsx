@@ -1,5 +1,7 @@
-import { Coffee, Smartphone, Zap, Shield, TrendingUp, Users } from "lucide-react";
+import { Coffee, Smartphone, Zap, Shield, TrendingUp, Users, ChevronLeft, ChevronRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
 
 const features = [
   {
@@ -41,6 +43,34 @@ const features = [
 ];
 
 const FeaturesSection = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+
+  // Auto play effect
+  useEffect(() => {
+    if (!isAutoPlay) return;
+    
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => 
+        prevIndex >= features.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlay]);
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex >= features.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex <= 0 ? features.length - 1 : prevIndex - 1
+    );
+  };
+
   return (
     <section id="features" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -56,7 +86,8 @@ const FeaturesSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in-up">
+        {/* Desktop Grid Layout */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in-up">
           {features.map((feature, index) => (
             <Card
               key={index}
@@ -78,6 +109,66 @@ const FeaturesSection = () => {
               </div>
             </Card>
           ))}
+        </div>
+
+        {/* Mobile Carousel Layout */}
+        <div className="md:hidden relative max-w-sm mx-auto">
+          {/* Carousel container */}
+          <div 
+            className="overflow-hidden rounded-lg"
+            onMouseEnter={() => setIsAutoPlay(false)}
+            onMouseLeave={() => setIsAutoPlay(true)}
+          >
+            <div 
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ 
+                transform: `translateX(-${currentIndex * (100 / 1.2)}%)`,
+                width: `${features.length * (100 / 1.2)}%`
+              }}
+            >
+              {features.map((feature, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 px-3"
+                  style={{ width: `${100 / features.length}%` }}
+                >
+                  <Card
+                    className="p-6 hover:shadow-warm transition-all duration-300 hover:-translate-y-1 bg-card border-border group animate-fade-in-up h-full"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-coffee flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                        <feature.icon className="w-6 h-6 text-primary-foreground" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">
+                          {feature.title}
+                        </h3>
+                        <p className="text-muted-foreground">
+                          {feature.description}
+                        </p>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Dots indicator - only on mobile */}
+          <div className="flex justify-center mt-6 space-x-2">
+            {features.map((_, index) => (
+              <button
+                key={index}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === currentIndex 
+                    ? 'bg-gradient-coffee w-8' 
+                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                }`}
+                onClick={() => setCurrentIndex(index)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
