@@ -1,0 +1,3 @@
+This project does NOT use Remix framework.
+This project uses Vite + React + Wouter.
+Remix IDE should not detect this as a Remix project.
