@@ -11,7 +11,10 @@ import {
   Lock,
   Users,
   Globe,
-  Filter
+  Filter,
+  Plus,
+  Edit,
+  Trash2
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -179,7 +182,7 @@ const CreatorPosts = () => {
             <Link href={`/${username}`}>
               <Button variant="ghost" size="sm" className="text-white hover:bg-white/20">
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Dashboard
+                Trang chủ
               </Button>
             </Link>
           </div>
@@ -216,7 +219,13 @@ const CreatorPosts = () => {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-foreground">Posts</h2>
+              <h2 className="text-2xl font-bold text-foreground">Quản lý bài viết</h2>
+              <Link href={`/${username}/create-post`}>
+                <Button className="bg-gradient-coffee hover:opacity-90">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Tạo bài viết mới
+                </Button>
+              </Link>
             </div>
 
             {/* Filter Tabs */}
@@ -306,15 +315,17 @@ const CreatorPosts = () => {
                         </div>
                       </div>
 
-                      {post.isPublic ? (
-                        <Button variant="outline" size="sm" className="w-full">
-                          Xem bài viết
+                      <div className="flex gap-2">
+                        <Link href={`/${username}/post-editor/${post.id}`} className="flex-1">
+                          <Button variant="outline" size="sm" className="w-full">
+                            <Edit className="w-4 h-4 mr-2" />
+                            Chỉnh sửa
+                          </Button>
+                        </Link>
+                        <Button variant="outline" size="sm" className="px-3 text-red-500 hover:text-red-700 hover:border-red-300">
+                          <Trash2 className="w-4 h-4" />
                         </Button>
-                      ) : (
-                        <Button className="w-full bg-gradient-coffee hover:opacity-90">
-                          Support to Unlock
-                        </Button>
-                      )}
+                      </div>
                     </CardContent>
                   </div>
                 </Card>
@@ -328,9 +339,12 @@ const CreatorPosts = () => {
                   {selectedFilter === "supporters" && "Chưa có bài viết dành cho supporters."}
                   {selectedFilter === "all" && "Chưa có bài viết nào."}
                 </div>
-                <Button variant="outline">
-                  <Link href={`/${username}`}>Về trang chủ</Link>
-                </Button>
+                <Link href={`/${username}/create-post`}>
+                  <Button className="bg-gradient-coffee hover:opacity-90">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Tạo bài viết đầu tiên
+                  </Button>
+                </Link>
               </div>
             )}
           </CardContent>

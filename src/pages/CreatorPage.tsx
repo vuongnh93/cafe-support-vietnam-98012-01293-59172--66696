@@ -149,7 +149,7 @@ const CreatorPage = () => {
             <Button variant="default" size="sm" className="bg-secondary text-secondary-foreground">
               Home
             </Button>
-            <Link href={`/posts/${username}`}>
+            <Link href={`/${username}/posts`}>
               <Button variant="outline" size="sm" className="text-foreground/80 hover:text-primary">
                 Posts ({creatorData.posts.length})
               </Button>

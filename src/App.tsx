@@ -43,7 +43,7 @@ const App = () => (
         <Route path="/supporter-management" component={SupporterManagement} />
         <Route path="/post/:postSlug" component={PostDetail} />
         <Route path="/posts" component={Posts} />
-        <Route path="/posts/:username" component={CreatorPosts} />
+        <Route path="/:username/posts" component={CreatorPosts} />
         <Route path="/post-editor" component={PostEditor} />
         <Route path="/post-editor/:id" component={PostEditor} />
         <Route path="/support" component={SupportPage} />
