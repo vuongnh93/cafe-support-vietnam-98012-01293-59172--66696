@@ -253,88 +253,76 @@ const CreatorPage = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Left Column - Main Content */}
           <div className="lg:col-span-2 space-y-8">
-            {/* About Section */}
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-2xl font-bold text-foreground">About {creatorData.name}</h2>
-                  <Button variant="ghost" size="sm">
-                    <Edit3 className="w-4 h-4 mr-2" />
-                    Edit
-                  </Button>
-                </div>
-                <p className="text-muted-foreground leading-relaxed">
-                  {creatorData.bio}
-                </p>
-              </CardContent>
-            </Card>
-
-
-            {/* Recent Posts */}
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-foreground">Bài viết gần đây</h2>
-              
-              {creatorData.posts.map((post: any) => (
-                <Card key={post.id} className="overflow-hidden">
-                  <CardContent className="p-0">
-                    <div className="flex">
-                      <img
-                        src={post.thumbnail}
-                        alt={post.title}
-                        className="w-48 h-32 object-cover"
-                      />
-                      <div className="p-6 flex-1">
-                        <h3 className="text-xl font-semibold text-foreground mb-2 line-clamp-2">
-                          {post.title}
-                        </h3>
-                        <p className="text-muted-foreground mb-4 line-clamp-2">
-                          {post.description}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                            <span>{post.time}</span>
-                            <div className="flex items-center gap-1">
-                              <Heart className="w-4 h-4" />
-                              <span>{post.likes}</span>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                            <Eye className="w-4 h-4" />
-                            <span>{post.views} views</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
             {/* Recent Supporters */}
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-xl font-semibold text-foreground mb-4">Người ủng hộ gần đây</h2>
-                <div className="space-y-3">
+                <h2 className="text-xl font-semibold text-foreground mb-4">Recent supporters</h2>
+                <div className="space-y-4">
                   {creatorData.recentSupporters.map((supporter: any, index: number) => (
-                    <div key={index} className="flex items-center justify-between">
-                      <span className="font-medium text-foreground">{supporter.name}</span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-muted-foreground">{supporter.time}</span>
-                        <div className="flex items-center gap-1">
-                          {Array.from({ length: supporter.amount }).map((_, i) => (
-                            <Coffee key={i} className="w-4 h-4 text-secondary" />
-                          ))}
+                    <div key={index} className="flex items-center gap-3">
+                      <Avatar className="w-10 h-10">
+                        <AvatarFallback className="bg-secondary text-secondary-foreground">
+                          {supporter.name.charAt(0)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-foreground">{supporter.name}</span>
+                          <span className="text-sm text-muted-foreground">bought {supporter.amount} coffees</span>
                         </div>
+                        <div className="text-sm text-muted-foreground">{supporter.time}</div>
                       </div>
                     </div>
                   ))}
                 </div>
-                <div className="mt-4 pt-4 border-t border-border">
-                  <Link href="/">
-                    <Button variant="ghost" size="sm">
-                      Về trang chủ
-                    </Button>
-                  </Link>
+                <div className="mt-6 pt-4 border-t border-border">
+                  <Button variant="ghost" size="sm" className="w-full">
+                    See more
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Posts */}
+            <Card>
+              <CardContent className="p-6">
+                <h2 className="text-xl font-semibold text-foreground mb-4">Posts</h2>
+                <div className="space-y-4">
+                  {creatorData.posts.map((post: any) => (
+                    <div key={post.id} className="border border-border rounded-lg p-4">
+                      <div className="flex items-center gap-3 mb-3">
+                        <Avatar className="w-8 h-8">
+                          <AvatarImage src={creatorData.avatar} />
+                          <AvatarFallback>{creatorData.name.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <div className="text-sm font-medium text-foreground">{post.title}</div>
+                          <div className="text-xs text-muted-foreground">{post.time} • {post.views} views</div>
+                        </div>
+                      </div>
+                      <img
+                        src={post.thumbnail}
+                        alt={post.title}
+                        className="w-full h-48 object-cover rounded-lg mb-3"
+                      />
+                      <p className="text-sm text-muted-foreground mb-3">{post.description}</p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Heart className="w-4 h-4" />
+                            <span>{post.likes}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <MessageCircle className="w-4 h-4" />
+                            <span>0</span>
+                          </div>
+                        </div>
+                        <Button variant="outline" size="sm">
+                          View all posts
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -342,8 +330,7 @@ const CreatorPage = () => {
 
           {/* Right Column - Support Widget */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 space-y-6">
-              {/* Buy Coffee */}
+            <div className="sticky top-24">
               <Card>
                 <CardContent className="p-6">
                   <h2 className="text-xl font-semibold text-foreground mb-6">
@@ -351,40 +338,82 @@ const CreatorPage = () => {
                   </h2>
                   
                   <div className="space-y-4">
-                    <div className="space-y-3">
-                      <label className="flex items-center space-x-3">
-                        <input
-                          type="radio"
-                          name="coffee-amount"
-                          value="1"
-                          checked={selectedCoffeeAmount === "1"}
-                          onChange={(e) => setSelectedCoffeeAmount(e.target.value)}
-                          className="text-secondary"
-                        />
-                        <span className="text-foreground">1 cà phê - 25.000₫</span>
+                    {/* Coffee Selection */}
+                    <div className="flex items-center justify-center gap-2 mb-4">
+                      <button 
+                        onClick={() => setSelectedCoffeeAmount("1")}
+                        className={`w-12 h-12 rounded-full border-2 flex items-center justify-center ${
+                          selectedCoffeeAmount === "1" 
+                            ? 'border-secondary bg-secondary text-secondary-foreground' 
+                            : 'border-border hover:border-secondary'
+                        }`}
+                      >
+                        <Coffee className="w-6 h-6" />
+                      </button>
+                      <button 
+                        onClick={() => setSelectedCoffeeAmount("3")}
+                        className={`w-12 h-12 rounded-full border-2 flex items-center justify-center ${
+                          selectedCoffeeAmount === "3" 
+                            ? 'border-secondary bg-secondary text-secondary-foreground' 
+                            : 'border-border hover:border-secondary'
+                        }`}
+                      >
+                        <span className="text-lg font-bold">3</span>
+                      </button>
+                      <button 
+                        onClick={() => setSelectedCoffeeAmount("5")}
+                        className={`w-12 h-12 rounded-full border-2 flex items-center justify-center ${
+                          selectedCoffeeAmount === "5" 
+                            ? 'border-secondary bg-secondary text-secondary-foreground' 
+                            : 'border-border hover:border-secondary'
+                        }`}
+                      >
+                        <span className="text-lg font-bold">5</span>
+                      </button>
+                      <button 
+                        onClick={() => setSelectedCoffeeAmount("10")}
+                        className={`w-12 h-12 rounded-full border-2 flex items-center justify-center ${
+                          selectedCoffeeAmount === "10" 
+                            ? 'border-secondary bg-secondary text-secondary-foreground' 
+                            : 'border-border hover:border-secondary'
+                        }`}
+                      >
+                        <span className="text-lg font-bold">10</span>
+                      </button>
+                    </div>
+
+                    <Input
+                      placeholder="Name or @yoursocial"
+                      value={supporterName}
+                      onChange={(e) => setSupporterName(e.target.value)}
+                    />
+
+                    <div className="relative">
+                      <Textarea
+                        placeholder="Say something nice..."
+                        value={supportMessage}
+                        onChange={(e) => setSupportMessage(e.target.value)}
+                        className="pr-12"
+                      />
+                      <Button variant="ghost" size="sm" className="absolute bottom-2 right-2 p-2">
+                        <Camera className="w-4 h-4" />
+                      </Button>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="monthly"
+                        checked={isMonthly}
+                        onCheckedChange={(checked: boolean) => setIsMonthly(checked)}
+                      />
+                      <label htmlFor="monthly" className="text-sm text-muted-foreground">
+                        Make this monthly
                       </label>
-                      <label className="flex items-center space-x-3">
-                        <input
-                          type="radio"
-                          name="coffee-amount"
-                          value="3"
-                          checked={selectedCoffeeAmount === "3"}
-                          onChange={(e) => setSelectedCoffeeAmount(e.target.value)}
-                          className="text-secondary"
-                        />
-                        <span className="text-foreground">3 cà phê - 75.000₫</span>
-                      </label>
-                      <label className="flex items-center space-x-3">
-                        <input
-                          type="radio"
-                          name="coffee-amount"
-                          value="5"
-                          checked={selectedCoffeeAmount === "5"}
-                          onChange={(e) => setSelectedCoffeeAmount(e.target.value)}
-                          className="text-secondary"
-                        />
-                        <span className="text-foreground">5 cà phê - 125.000₫</span>
-                      </label>
+                      <button className="text-muted-foreground hover:text-foreground">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                        </svg>
+                      </button>
                     </div>
 
                     <Button 
@@ -392,34 +421,10 @@ const CreatorPage = () => {
                       className="w-full bg-gradient-coffee hover:opacity-90"
                       size="lg"
                     >
-                      Ủng hộ ngay
+                      Support {selectedCoffeeAmount === "1" ? "25.000₫" : 
+                               selectedCoffeeAmount === "3" ? "75.000₫" : 
+                               selectedCoffeeAmount === "5" ? "125.000₫" : "250.000₫"}
                     </Button>
-
-                    <p className="text-xs text-muted-foreground text-center">
-                      Hỗ trợ qua MoMo, ZaloPay, hoặc thẻ
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Recent Supporters Duplicate */}
-              <Card>
-                <CardContent className="p-6">
-                  <h2 className="text-xl font-semibold text-foreground mb-4">Người ủng hộ gần đây</h2>
-                  <div className="space-y-3">
-                    {creatorData.recentSupporters.map((supporter: any, index: number) => (
-                      <div key={index} className="flex items-center justify-between">
-                        <span className="font-medium text-foreground">{supporter.name}</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm text-muted-foreground">{supporter.time}</span>
-                          <div className="flex items-center gap-1">
-                            {Array.from({ length: supporter.amount }).map((_, i) => (
-                              <Coffee key={i} className="w-4 h-4 text-secondary" />
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
                   </div>
                 </CardContent>
               </Card>
