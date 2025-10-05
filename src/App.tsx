@@ -17,6 +17,7 @@ import SupporterManagement from "./pages/SupporterManagement";
 import PostDetail from "./pages/PostDetail";
 import Posts from "./pages/Posts";
 import PostEditor from "./pages/PostEditor";
+import SupportPage from "./pages/SupportPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +43,8 @@ const App = () => (
         <Route path="/posts" component={Posts} />
         <Route path="/post-editor" component={PostEditor} />
         <Route path="/post-editor/:id" component={PostEditor} />
+        <Route path="/support" component={SupportPage} />
+        <Route path="/support/:username" component={SupportPage} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route component={NotFound} />
       </Router>
