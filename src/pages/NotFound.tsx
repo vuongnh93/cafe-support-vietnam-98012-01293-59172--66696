@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "wouter";
 import { useEffect } from "react";
 
 const NotFound = () => {

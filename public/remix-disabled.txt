@@ -1,2 +1,0 @@
-This project does not use Remix framework.
-It uses Vite + React + React Router.

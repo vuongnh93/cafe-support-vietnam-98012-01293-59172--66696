@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useParams } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
@@ -11,7 +11,7 @@ import { ArrowLeft, Send, Eye, Upload, Image as ImageIcon, Video, Link as LinkIc
 import { toast } from "sonner";
 
 const CreatePost = () => {
-  const navigate = useNavigate();
+  const [, navigate] = useLocation();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isPreview, setIsPreview] = useState(false);
