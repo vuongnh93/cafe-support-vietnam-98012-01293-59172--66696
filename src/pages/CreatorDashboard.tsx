@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { Link, useLocation, useParams } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
+import CreateContentModal from "@/components/CreateContentModal";
 import { 
   Coffee, 
   Users, 
@@ -12,7 +14,8 @@ import {
   Settings,
   PenSquare,
   BarChart3,
-  Heart
+  Heart,
+  Plus
 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
@@ -49,7 +52,29 @@ const dashboardData = {
 };
 
 const CreatorDashboard = () => {
+  const [, navigate] = useLocation();
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const progressPercent = (dashboardData.stats.thisMonthCoffees / dashboardData.stats.monthlyGoal) * 100;
+
+  const handleCreateContent = (type: 'post' | 'gallery' | 'audio' | 'shop') => {
+    switch (type) {
+      case 'post':
+        navigate('/post-editor');
+        break;
+      case 'gallery':
+        // Navigate to gallery creation
+        console.log('Create gallery');
+        break;
+      case 'audio':
+        // Navigate to audio creation
+        console.log('Create audio');
+        break;
+      case 'shop':
+        // Navigate to shop creation
+        console.log('Create shop item');
+        break;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -73,12 +98,14 @@ const CreatorDashboard = () => {
                 Settings
               </Button>
             </Link>
-            <Link to="/create-post">
-              <Button size="sm" className="bg-gradient-coffee">
-                <PenSquare className="w-4 h-4 mr-2" />
-                Tạo bài viết
-              </Button>
-            </Link>
+            <Button 
+              size="sm" 
+              className="bg-gradient-coffee"
+              onClick={() => setIsCreateModalOpen(true)}
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Tạo
+            </Button>
           </div>
         </div>
 
@@ -195,19 +222,20 @@ const CreatorDashboard = () => {
 
         {/* Quick Actions */}
         <div className="grid md:grid-cols-3 gap-6 mt-8">
-          <Link to="/create-post" className="group">
-            <Card className="p-6 bg-card border-border hover:shadow-warm transition-all cursor-pointer">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-lg bg-gradient-coffee flex items-center justify-center">
-                  <PenSquare className="w-6 h-6 text-primary-foreground" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground group-hover:text-secondary transition-colors">Tạo bài viết mới</h4>
-                  <p className="text-xs text-muted-foreground">Chia sẻ nội dung mới</p>
-                </div>
+          <Card 
+            className="p-6 bg-card border-border hover:shadow-warm transition-all cursor-pointer group"
+            onClick={() => setIsCreateModalOpen(true)}
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-lg bg-gradient-coffee flex items-center justify-center group-hover:scale-110 transition-transform">
+                <PenSquare className="w-6 h-6 text-primary-foreground" />
               </div>
-            </Card>
-          </Link>
+              <div>
+                <h4 className="font-semibold text-foreground group-hover:text-secondary transition-colors">Tạo bài viết mới</h4>
+                <p className="text-xs text-muted-foreground">Chia sẻ nội dung mới</p>
+              </div>
+            </div>
+          </Card>
 
           <Link to="/supporter-management" className="group">
             <Card className="p-6 bg-card border-border hover:shadow-warm transition-all cursor-pointer">
@@ -239,6 +267,13 @@ const CreatorDashboard = () => {
         </div>
       </main>
       <Footer />
+
+      {/* Create Content Modal */}
+      <CreateContentModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onSelectContentType={handleCreateContent}
+      />
     </div>
   );
 };

@@ -15,6 +15,8 @@ import CreatorAnalytics from "./pages/CreatorAnalytics";
 import CreatePost from "./pages/CreatePost";
 import SupporterManagement from "./pages/SupporterManagement";
 import PostDetail from "./pages/PostDetail";
+import Posts from "./pages/Posts";
+import PostEditor from "./pages/PostEditor";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,6 +39,9 @@ const App = () => (
         <Route path="/create-post" component={CreatePost} />
         <Route path="/supporter-management" component={SupporterManagement} />
         <Route path="/post/:postSlug" component={PostDetail} />
+        <Route path="/posts" component={Posts} />
+        <Route path="/post-editor" component={PostEditor} />
+        <Route path="/post-editor/:id" component={PostEditor} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route component={NotFound} />
       </Router>
