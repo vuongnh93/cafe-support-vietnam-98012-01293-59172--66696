@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Remix IDE files
+.remix/
+remix.config.js
+remix.config.ts

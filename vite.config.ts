@@ -15,4 +15,11 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // Prevent Remix IDE conflicts
+  define: {
+    __REMIX_CONTEXT__: undefined,
+  },
+  optimizeDeps: {
+    exclude: ['@remix-run/router'],
+  },
 }));
