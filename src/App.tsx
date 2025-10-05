@@ -44,7 +44,7 @@ const App = () => (
         <Route path="/post-editor" component={PostEditor} />
         <Route path="/post-editor/:id" component={PostEditor} />
         <Route path="/support" component={SupportPage} />
-        <Route path="/support/:username" component={SupportPage} />
+        <Route path="/:username" component={SupportPage} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route component={NotFound} />
       </Router>
